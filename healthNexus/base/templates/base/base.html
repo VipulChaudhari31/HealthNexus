@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Nexus</title>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}">
+</head>
+
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        {% block content %} {% endblock content %}
+    </div>
+    <script src="{% static 'base/js/jquery.js' %}"></script>
+    <script src="{% static 'base/js/popper.js' %}"></script>
+    <script src="{% static 'base/js/bootstrap.js' %}"></script>
+</body>
+
+</html>
