@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# ALL ENTITIES
 class Specialization(models.Model):
     ORGANIZATION_SPECIALIZATIONS = [
         ("cardiology_hospital", "Cardiology Hospital"),
@@ -23,16 +22,16 @@ class Specialization(models.Model):
         ("psychiatric_clinic", "Psychiatric Clinic"),
         ("ent_clinic", "ENT Clinic"),
         ("cardiology_clinic", "Cardiology Clinic"),
-        ("clinical_pathology_lab", "Clinical Pathology"),
-        ("microbiology_lab", "Microbiology"),
-        ("chemistry_lab", "Chemistry"),
-        ("hematology_lab", "Hematology"),
-        ("immunology_lab", "Immunology"),
-        ("genetics_lab", "Genetics"),
-        ("cytology_lab", "Cytology"),
-        ("histopathology_lab", "Histopathology"),
-        ("virology_lab", "Virology"),
-        ("molecular_diagnostics_lab", "Molecular Diagnostics"),
+        ("clinical_pathology_lab", "Clinical Pathology Lab"),
+        ("microbiology_lab", "Microbiology Lab"),
+        ("chemistry_lab", "Chemistry Lab"),
+        ("hematology_lab", "Hematology Lab"),
+        ("immunology_lab", "Immunology Lab"),
+        ("genetics_lab", "Genetics Lab"),
+        ("cytology_lab", "Cytology Lab"),
+        ("histopathology_lab", "Histopathology Lab"),
+        ("virology_lab", "Virology Lab"),
+        ("molecular_diagnostics_lab", "Molecular Diagnostics Lab"),
     ]
 
     specialization_type = models.CharField(
@@ -164,7 +163,7 @@ class Doctor(models.Model):
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to="images/",default="base/male_doctor.png")
+    image = models.ImageField(upload_to="images/", default="base/male_doctor.png")
     dob = models.DateField(null=False, blank=False)
     gender = models.CharField(
         max_length=10, choices=GENDER_CHOICES, null=False, blank=False
@@ -177,13 +176,42 @@ class Doctor(models.Model):
     organization_id = models.ForeignKey(
         Organization,
         on_delete=models.DO_NOTHING,
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
     )
     phone_number = models.CharField(max_length=10, null=False, blank=False)
 
     def __str__(self):
         return f"{self.doctor_id}_{self.first_name}_{self.last_name}"
+
+
+class Organization_Staff(models.Model):
+    GENDER_CHOICES = [
+        ("male", "Male"),
+        ("female", "Female"),
+        ("other", "Other"),
+    ]
+
+    staff_id = models.CharField(
+        max_length=20, primary_key=True, unique=True, blank=False, null=False
+    )
+    first_name = models.CharField(max_length=100, blank=False, null=False)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=False, null=False)
+    image = models.ImageField(upload_to="images/", default="base/male_patient.png")
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    dob = models.DateField(null=False, blank=False)
+    address = models.TextField()
+    organization_id = models.ForeignKey(
+        Organization,
+        on_delete=models.DO_NOTHING,
+        null=False,
+        blank=False,
+    )
+    phone_number = models.CharField(max_length=10, null=False, blank=False)
+
+    def __str__(self):
+        return f"{self.staff_id}_{self.first_name}_{self.last_name}"
 
 
 class Patient(models.Model):
@@ -193,22 +221,46 @@ class Patient(models.Model):
         ("other", "Other"),
     ]
 
-    patient_id = models.CharField(max_length=30, unique=True, null=False, blank=False)
+    patient_id = models.CharField(
+        max_length=20, primary_key=True, unique=True, blank=False, null=False
+    )
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to="images/",default="base/male_patient.png")
+    image = models.ImageField(upload_to="images/", default="base/male_patient.png")
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     dob = models.DateField(null=False, blank=False)
     address = models.TextField()
-    symptoms = models.TextField()
-    doctors = models.ForeignKey(
-        Doctor, on_delete=models.DO_NOTHING, null=True, blank=True
-    )
-    organization_id = models.ForeignKey(
-        Organization, on_delete=models.DO_NOTHING, null=True, blank=True
-    )
     phone_number = models.CharField(max_length=15, null=False, blank=False)
 
     def __str__(self):
         return f"{self.patient_id}_{self.first_name}_{self.last_name}"
+
+
+class Lab_Report(models.Model):
+    file = models.FileField(upload_to="lab_reports/")
+
+    def __str__(self):
+        return self.file.name
+
+
+class Patient_History(models.Model):
+    patient_id = models.ForeignKey(
+        Patient, on_delete=models.DO_NOTHING, null=False, blank=False
+    )
+    doctor_id = models.ForeignKey(
+        Doctor, on_delete=models.DO_NOTHING, null=False, blank=False
+    )
+    staff_id = models.ForeignKey(
+        Organization_Staff, on_delete=models.DO_NOTHING, null=False, blank=False
+    )
+    organization_id = models.ForeignKey(
+        Organization, on_delete=models.DO_NOTHING, null=False, blank=False
+    )
+    patient_report_pdf = models.FileField(
+        upload_to="patient_reports/", blank=False, null=False
+    )
+    lab_reports = models.ManyToManyField(Lab_Report, blank=True)
+
+    def __str__(self) -> str:
+        return self.patient_id
