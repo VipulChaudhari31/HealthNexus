@@ -95,6 +95,22 @@ class Doctor_Form(forms.ModelForm):
             ),
         }
 
+    def clean_doctor_id(self):
+        doctor_id = self.cleaned_data["doctor_id"]
+        if not doctor_id.isdigit() or len(doctor_id) != 16:
+            raise forms.ValidationError(
+                "Doctor ID should be exactly 16 digits and contain only digits."
+            )
+        return doctor_id
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+        if not phone_number.isdigit() or len(phone_number) != 10:
+            raise forms.ValidationError(
+                "Phone number should be exactly 10 digits and contain only digits."
+            )
+        return phone_number
+
 
 class Organisation_Staff_Form(forms.ModelForm):
     class Meta:
@@ -164,6 +180,22 @@ class Organisation_Staff_Form(forms.ModelForm):
             ),
         }
 
+    def clean_staff_id(self):
+        staff_id = self.cleaned_data["staff_id"]
+        if not staff_id.isdigit() or len(staff_id) != 16:
+            raise forms.ValidationError(
+                "Staff Id should be exactly 16 digits and contain only digits."
+            )
+        return staff_id
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+        if not phone_number.isdigit() or len(phone_number) != 10:
+            raise forms.ValidationError(
+                "Phone number should be exactly 10 digits and contain only digits."
+            )
+        return phone_number
+
 
 class Patient_Form(forms.ModelForm):
     class Meta:
@@ -206,6 +238,22 @@ class Patient_Form(forms.ModelForm):
                 attrs={"class": "form-control bg-dark text-light"}
             ),
         }
+
+    def clean_patient_id(self):
+        patient_id = self.cleaned_data["patient_id"]
+        if not patient_id.isdigit() or len(patient_id) != 16:
+            raise forms.ValidationError(
+                "Patient Id should be exactly 16 digits and contain only digits."
+            )
+        return patient_id
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data["phone_number"]
+        if not phone_number.isdigit() or len(phone_number) != 10:
+            raise forms.ValidationError(
+                "Phone number should be exactly 10 digits and contain only digits."
+            )
+        return phone_number
 
 
 class Patient_History_Form(forms.ModelForm):

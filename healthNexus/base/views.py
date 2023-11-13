@@ -177,7 +177,7 @@ def patient(request):
             fm = Patient_Form()
     else:
         fm = Patient_Form()
-
+    
     all_records = Patient.objects.all()
 
     return render(
@@ -240,3 +240,5 @@ def delete_patient_history_record(request,id):
         pi = Patient_History.objects.get(pk=id)
         pi.delete()
         return redirect('patient_history_page')
+    
+
