@@ -1,17 +1,16 @@
-{% extends 'base/base.html' %}
-
-{% block content %}
+{% extends 'base/base.html' %} {% block content %}
 
 <div class="row">
-    <div class="col-sm-8">
-        <h4 class="alert alert-info">Update Patient Details</h4>
-        <form action="" method="POST"  enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Update" class="btn btn-success">
-            <a href="{% url 'patient_page' %}" class="btn btn-small btn-info">Back to home</a>
-        </form>
-    </div>
+  <div class="col-sm-8">
+    <h4 class="alert alert-info">Update Patient Details</h4>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %} {{ form.as_p }}
+      <input type="submit" value="Update" class="btn btn-success" />
+      <a href="{% url 'patient_page' %}" class="btn btn-small btn-info"
+        >Back to home</a
+      >
+    </form>
+  </div>
 </div>
 
 {% endblock content %}

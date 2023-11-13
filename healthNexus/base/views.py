@@ -203,3 +203,40 @@ def delete_patient_record(request,id):
         pi = Patient.objects.get(pk=id)
         pi.delete()
         return redirect('patient_page')
+    
+
+# Create,show,update and delete for patient history
+def patient_history(request):
+    if request.method == "POST":
+        fm = Patient_History_Form(request.POST,request.FILES)
+        if fm.is_valid():
+            fm.save()
+            fm = Patient_History_Form()
+    else:
+        fm = Patient_History_Form()
+
+    all_records = Patient_History.objects.all()
+
+    return render(
+        request,
+        "base\patient_history_page.html",
+        {"form": fm, "all_records": all_records},
+    )
+
+def update_patient_history_record(request,id):
+    if request.method=='POST':
+        pi=Patient_History.objects.get(pk=id)
+        fm=Patient_History_Form(request.POST,request.FILES,instance=pi)
+        if fm.is_valid():
+            fm.save()
+    else:
+        pi=Patient_History.objects.get(pk=id)
+        fm=Patient_History_Form(instance=pi)
+    
+    return render(request,'base/update_patient_history_page.html',{'form':fm})
+
+def delete_patient_history_record(request,id):
+    if request.method == "POST":
+        pi = Patient_History.objects.get(pk=id)
+        pi.delete()
+        return redirect('patient_history_page')

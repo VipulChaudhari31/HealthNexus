@@ -34,6 +34,11 @@ urlpatterns = [
     path('patient_page/',patient,name='patient_page'),
     path('patient_page/delete_patient_record/<str:id>',delete_patient_record,name='delete_patient_record'),
     path('patient_page/update_patient_record/<str:id>',update_patient_record,name='update_patient_record'),
+
+    # View for patient_history
+    path('patient_history_page',patient_history,name='patient_history_page'),
+    path('patient_history_page/delete_patient_history_record/<int:id>',delete_patient_history_record,name='delete_patient_history_record'),
+    path('patient_history_page/update_patient_history_record/<int:id>',update_patient_history_record,name='update_patient_history_record'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
