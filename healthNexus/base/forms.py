@@ -94,3 +94,115 @@ class Doctor_Form(forms.ModelForm):
                 }
             ),
         }
+
+
+class Organisation_Staff_Form(forms.ModelForm):
+    class Meta:
+        model = Organization_Staff
+        fields = [
+            "staff_id",
+            "first_name",
+            "middle_name",
+            "last_name",
+            "designation",
+            "image",
+            "gender",
+            "dob",
+            "address",
+            "organization_id",
+            "phone_number",
+        ]
+        widgets = {
+            "staff_id": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Staff ID",
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "First Name",
+                }
+            ),
+            "middle_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Middle Name",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Last Name",
+                }
+            ),
+            "designation": forms.Select(
+                attrs={"class": "form-select bg-dark text-light"}
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "gender": forms.Select(attrs={"class": "form-select bg-dark text-light"}),
+            "dob": forms.DateInput(
+                attrs={"class": "form-control bg-dark text-light", "type": "date"}
+            ),
+            "address": forms.Textarea(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Address",
+                }
+            ),
+            "organization_id": forms.Select(
+                attrs={"class": "form-select bg-dark text-light"}
+            ),
+            "phone_number": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Phone Number",
+                }
+            ),
+        }
+
+
+class Patient_Form(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = [
+            "patient_id",
+            "first_name",
+            "middle_name",
+            "last_name",
+            "image",
+            "gender",
+            "dob",
+            "address",
+            "phone_number",
+        ]
+        widgets = {
+            "patient_id": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "middle_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "gender": forms.Select(attrs={"class": "form-control bg-dark text-light"}),
+            "dob": forms.DateInput(
+                attrs={"class": "form-control bg-dark text-light", "type": "date"}
+            ),
+            "address": forms.Textarea(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "phone_number": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+        }

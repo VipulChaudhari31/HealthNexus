@@ -163,7 +163,7 @@ class Doctor(models.Model):
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to="images/", default="base/male_doctor.png")
+    image = models.ImageField(upload_to="images/")
     dob = models.DateField(null=False, blank=False)
     gender = models.CharField(
         max_length=10, choices=GENDER_CHOICES, null=False, blank=False
@@ -192,13 +192,31 @@ class Organization_Staff(models.Model):
         ("other", "Other"),
     ]
 
+    DESIGNATION_CHOICES = [
+        ("nurse", "Nurse"),
+        ("lab_technician", "Lab Technician"),
+        ("pharmacist", "Pharmacist"),
+        ("radiologist", "Radiologist"),
+        ("physiotherapist", "Physiotherapist"),
+        ("dietitian", "Dietitian"),
+        ("paramedic", "Paramedic"),
+        ("medical_assistant", "Medical Assistant"),
+        ("sweeper", "Sweeper"),
+        ("ward_attendant", "Ward Attendant"),
+        ("security_guard", "Security Guard"),
+        ("receptionist", "Receptionist"),
+        ("housekeeping_staff", "Housekeeping Staff"),
+        ("ambulance_driver", "Ambulance Driver"),
+    ]
+
     staff_id = models.CharField(
         max_length=20, primary_key=True, unique=True, blank=False, null=False
     )
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to="images/", default="base/male_patient.png")
+    designation = models.CharField(max_length=20, choices=DESIGNATION_CHOICES,null=False,blank=False,default='nurse')
+    image = models.ImageField(upload_to="images/")
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     dob = models.DateField(null=False, blank=False)
     address = models.TextField()
@@ -227,7 +245,7 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    image = models.ImageField(upload_to="images/", default="base/male_patient.png")
+    image = models.ImageField(upload_to="images/")
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     dob = models.DateField(null=False, blank=False)
     address = models.TextField()
@@ -236,14 +254,6 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.patient_id}_{self.first_name}_{self.last_name}"
 
-
-class Lab_Report(models.Model):
-    file = models.FileField(upload_to="lab_reports/")
-
-    def __str__(self):
-        return self.file.name
-
-
 class Patient_History(models.Model):
     patient_id = models.ForeignKey(
         Patient, on_delete=models.DO_NOTHING, null=False, blank=False
@@ -251,16 +261,16 @@ class Patient_History(models.Model):
     doctor_id = models.ForeignKey(
         Doctor, on_delete=models.DO_NOTHING, null=False, blank=False
     )
-    staff_id = models.ForeignKey(
-        Organization_Staff, on_delete=models.DO_NOTHING, null=False, blank=False
-    )
+    staff_id = models.ManyToManyField(
+        Organization_Staff,related_name='asscociated_staffs')
     organization_id = models.ForeignKey(
         Organization, on_delete=models.DO_NOTHING, null=False, blank=False
     )
     patient_report_pdf = models.FileField(
-        upload_to="patient_reports/", blank=False, null=False
+        upload_to="patient_overall_report/", blank=False, null=False
     )
-    lab_reports = models.ManyToManyField(Lab_Report, blank=True)
+    lab_reports_pdf = models.FileField(
+        upload_to="patient_lab_report/",null=True,blank=True)
 
     def __str__(self) -> str:
         return self.patient_id

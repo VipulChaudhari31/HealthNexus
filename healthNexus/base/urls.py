@@ -25,6 +25,15 @@ urlpatterns = [
     path('doctor_page/delete_doctor_record/<str:id>',delete_doctor_record,name='delete_doctor_record'),
     path('doctor_page/update_doctor_record/<str:id>',update_doctor_record,name='update_doctor_record'),
 
+    # Views for organisation staff
+    path('organization_staff_page/',organization_staff,name='organization_staff_page'),
+    path('organization_staff_page/delete_organization_staff_record/<str:id>',delete_organisation_staff_record,name='delete_organization_staff_record'),
+    path('organization_staff_page/update_organization_staff_record/<str:id>',update_organisation_staff_record,name='update_organization_staff_record'),
+
+    # Views for patient
+    path('patient_page/',patient,name='patient_page'),
+    path('patient_page/delete_patient_record/<str:id>',delete_patient_record,name='delete_patient_record'),
+    path('patient_page/update_patient_record/<str:id>',update_patient_record,name='update_patient_record'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

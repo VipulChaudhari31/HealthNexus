@@ -129,3 +129,77 @@ def delete_doctor_record(request, id):
         pi = Doctor.objects.get(pk=id)
         pi.delete()
         return redirect('doctor_page')
+
+
+# Create,show,update and delete operation for organization staff
+def organization_staff(request):
+    if request.method == "POST":
+        fm = Organisation_Staff_Form(request.POST,request.FILES)
+        if fm.is_valid():
+            fm.save()
+            fm = Organisation_Staff_Form()
+    else:
+        fm = Organisation_Staff_Form()
+
+    all_records = Organization_Staff.objects.all()
+
+    return render(
+        request,
+        "base\organization_staff_page.html",
+        {"form": fm, "all_records": all_records},
+    )
+
+def update_organisation_staff_record(request,id):
+    if request.method=='POST':
+        pi=Organization_Staff.objects.get(pk=id)
+        fm=Organisation_Staff_Form(request.POST,request.FILES,instance=pi)
+        if fm.is_valid():
+            fm.save()
+    else:
+        pi=Organization_Staff.objects.get(pk=id)
+        fm=Organisation_Staff_Form(instance=pi)
+    
+    return render(request,'base/update_organization_staff_page.html',{'form':fm})
+
+def delete_organisation_staff_record(request,id):
+    if request.method == "POST":
+        pi = Organization_Staff.objects.get(pk=id)
+        pi.delete()
+        return redirect('organization_staff_page')
+    
+
+# Create,show,update and delete operation for patient
+def patient(request):
+    if request.method == "POST":
+        fm = Patient_Form(request.POST,request.FILES)
+        if fm.is_valid():
+            fm.save()
+            fm = Patient_Form()
+    else:
+        fm = Patient_Form()
+
+    all_records = Patient.objects.all()
+
+    return render(
+        request,
+        "base\patient_page.html",
+        {"form": fm, "all_records": all_records},
+    )
+
+def update_patient_record(request,id):
+    if request.method=='POST':
+        pi=Patient.objects.get(pk=id)
+        fm=Patient_Form(request.POST,request.FILES,instance=pi)
+        if fm.is_valid():
+            fm.save()
+    else:
+        pi=Patient.objects.get(pk=id)
+        fm=Patient_Form(instance=pi)
+    
+    return render(request,'base/update_patient_page.html',{'form':fm})
+
+def delete_patient_record(request,id):
+    if request.method == "POST":
+        pi = Patient.objects.get(pk=id)
+        pi.delete()
+        return redirect('patient_page')
