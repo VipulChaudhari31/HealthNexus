@@ -270,7 +270,7 @@ class Patient_History(models.Model):
         Doctor, on_delete=models.DO_NOTHING, null=False, blank=False
     )
     staff_id = models.ManyToManyField(
-        Organization_Staff, related_name="asscociated_staffs"
+        Organization_Staff, related_name="asscociated_staffs",blank=True,null=True
     )
     organization_id = models.ForeignKey(
         Organization, on_delete=models.DO_NOTHING, null=False, blank=False

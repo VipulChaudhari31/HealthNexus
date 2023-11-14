@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<p>Login services for the following people</p>
+<ol>
+    <li>Patient</li>
+    <li>Doctor</li>
+    <li>Organization Admin</li>
+</ol>
+<p>Note that your username is your respective id and password is phone_number_registered@date_of_birth.
+    Date of birth in format of DDMMYYYY.
+</p>
+<hr>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-success" value="Login">
+</form>
+{% endblock content %}

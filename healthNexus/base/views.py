@@ -1,5 +1,37 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate,login
 from .forms import *
+
+# Landing page view
+def landing_page_view(request):
+    if request.method=='POST':
+        fm=AuthenticationForm(request=request,data=request.POST)
+        if fm.is_valid():
+            username=fm.cleaned_data['username']
+            password=fm.cleaned_data['password']
+            user=authenticate(username=username,password=password)
+            if user:
+                login(request,user)
+                custom_profile = CustomUserProfile.objects.get(user=user)
+                designation = custom_profile.designation
+                if designation=='doctor':
+                    return redirect('doctor_home_page')
+                elif designation=='patient':
+                    return redirect('patient_home_page')
+    else:
+        fm=AuthenticationForm()
+    return render(request,'base\website_landing_page.html',{'form':fm})
+
+def doctor_home_page(request):
+    personal_info=Doctor.objects.get(doctor_id=request.user.username)
+    all_his_patients_records = Patient_History.objects.filter(doctor_id=request.user.username)
+    return render(request,'base/1_doctor_home_page.html',{'personal_info':personal_info,'his_patient_records':all_his_patients_records})
+
+def patient_home_page(request):
+    personal_info=Patient.objects.get(patient_id=request.user.username)
+    all_his_patients_records = Patient_History.objects.filter(patient_id=request.user.username)
+    return render(request,'base/2_patient_home_page.html',{'personal_info':personal_info,'his_patient_records':all_his_patients_records})
 
 
 # Home page view

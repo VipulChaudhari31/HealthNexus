@@ -1,50 +1,55 @@
-{% extends 'base/base.html' %}
-{% load static %}
-
-{% block content %}
-<a href="/" class="btn btn-sm btn-info "> Back to home </a>
-<br> <br>
+{% extends 'base/base.html' %} {% load static %} {% block content %}
+<a href="/" class="btn btn-sm btn-info"> Back to home </a>
+<br />
+<br />
 <div class="row">
-    <!-- Adding data into database -->
-    <div class="col-sm-4">
-        <h4 class="text-center alert alert-info">Add New Degree</h4>
-        <form action="" method="POST">
+  <!-- Adding data into database -->
+  <div class="col-sm-4">
+    <h4 class="text-center alert alert-info">Add New Degree</h4>
+    <form action="" method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <input type="submit" class="btn btn-success" value="Add" />
+    </form>
+  </div>
+
+  <!-- Showing data from database -->
+  <div class="col-sm-8">
+    <h4 class="text-center alert alert-info">
+      All Records of Degrees of Doctor
+    </h4>
+    {% if all_records %}
+    <h4>Table Data</h4>
+    <table class="table table-hover table-dark">
+      <tr>
+        <th scope="col">Sr.no</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
+      </tr>
+
+      {% for key in all_records %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ key.name }}</td>
+        <td>
+          <form
+            action="{% url 'delete_degree_record' key.pk %}"
+            method="POST"
+            class="d-inline"
+          >
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-success" value="Add">
-        </form>
-    </div>
-
-    <!-- Showing data from database -->
-    <div class="col-sm-8">
-        <h4 class="text-center alert alert-info">All Records of Degrees of Doctor</h4>
-        {% if all_records %}
-        <h4>Table Data</h4>
-        <table class="table table-hover table-dark">
-            <tr>
-                <th scope="col">Sr.no</th>
-                <th scope="col">Name</th>
-                <th scope="col">Action</th>
-            </tr>
-
-            {% for key in all_records %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ key.name }}</td>
-                <td>
-                    <form action="{% url 'delete_degree_record' key.pk %}" method="POST"
-                        class="d-inline">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete" class="btn btn-danger btn-small">
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </table>
-        {% else %}
-        <h4 class="text-center alert alert-warning">No records in Database!</h4>
-        {% endif %}
-    </div>
+            <input
+              type="submit"
+              value="Delete"
+              class="btn btn-danger btn-small"
+            />
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <h4 class="text-center alert alert-warning">No records in Database!</h4>
+    {% endif %}
+  </div>
 </div>
-{% endblock %}
+{% endblock content %}

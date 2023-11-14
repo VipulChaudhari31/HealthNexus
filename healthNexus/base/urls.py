@@ -4,8 +4,13 @@ from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
+    # View for landing page
+    path('',landing_page_view,name='landing_page_view'),
+    path('patient_home_page',patient_home_page,name='patient_home_page'),
+    path('doctor_home_page',doctor_home_page,name='doctor_home_page'),
+
     # View for home page
-    path('',home_page_view,name='home_page'),
+    path('home_page/',home_page_view,name='home_page'),
     
     # Views for specialization_for_organisation
     path('specialization_for_organisation_page/',specialization_for_organisation,name='specialization_for_organisation_page'),
