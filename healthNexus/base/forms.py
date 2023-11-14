@@ -112,6 +112,44 @@ class Doctor_Form(forms.ModelForm):
         return phone_number
 
 
+class Update_Doctor_Form(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        fields = [
+            "first_name",
+            "middle_name",
+            "last_name",
+            "image",
+            "address",
+            "degrees",
+            "specialization",
+        ]
+
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "middle_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "address": forms.Textarea(
+                attrs={"rows": 3, "class": "form-control bg-dark text-light"}
+            ),
+            "degrees": forms.CheckboxSelectMultiple(
+                attrs={"class": "list-unstyled bg-dark text-light"}
+            ),
+            "specialization": forms.Select(
+                attrs={"class": "form-select bg-dark text-light"}
+            ),
+        }
+
+
 class Organisation_Staff_Form(forms.ModelForm):
     class Meta:
         model = Organization_Staff
@@ -197,6 +235,47 @@ class Organisation_Staff_Form(forms.ModelForm):
         return phone_number
 
 
+class Update_Organization_Staff_Form(forms.ModelForm):
+    class Meta:
+        model = Organization_Staff
+        fields = [
+            "first_name",
+            "middle_name",
+            "last_name",
+            "image",
+            "address",
+        ]
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "First Name",
+                }
+            ),
+            "middle_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Middle Name",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Last Name",
+                }
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "address": forms.Textarea(
+                attrs={
+                    "class": "form-control bg-dark text-light",
+                    "placeholder": "Address",
+                }
+            ),
+        }
+
+
 class Patient_Form(forms.ModelForm):
     class Meta:
         model = Patient
@@ -254,6 +333,35 @@ class Patient_Form(forms.ModelForm):
                 "Phone number should be exactly 10 digits and contain only digits."
             )
         return phone_number
+
+
+class Update_Patient_Form(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = [
+            "first_name",
+            "middle_name",
+            "last_name",
+            "image",
+            "address",
+        ]
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "middle_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "image": forms.ClearableFileInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "address": forms.Textarea(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+        }
 
 
 class Patient_History_Form(forms.ModelForm):

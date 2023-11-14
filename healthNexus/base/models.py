@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Specialization(models.Model):
@@ -215,7 +216,13 @@ class Organization_Staff(models.Model):
     first_name = models.CharField(max_length=100, blank=False, null=False)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=False, null=False)
-    designation = models.CharField(max_length=20, choices=DESIGNATION_CHOICES,null=False,blank=False,default='nurse')
+    designation = models.CharField(
+        max_length=20,
+        choices=DESIGNATION_CHOICES,
+        null=False,
+        blank=False,
+        default="nurse",
+    )
     image = models.ImageField(upload_to="images/")
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     dob = models.DateField(null=False, blank=False)
@@ -254,6 +261,7 @@ class Patient(models.Model):
     def __str__(self):
         return f"{self.patient_id}_{self.first_name}_{self.last_name}"
 
+
 class Patient_History(models.Model):
     patient_id = models.ForeignKey(
         Patient, on_delete=models.DO_NOTHING, null=False, blank=False
@@ -262,7 +270,8 @@ class Patient_History(models.Model):
         Doctor, on_delete=models.DO_NOTHING, null=False, blank=False
     )
     staff_id = models.ManyToManyField(
-        Organization_Staff,related_name='asscociated_staffs')
+        Organization_Staff, related_name="asscociated_staffs"
+    )
     organization_id = models.ForeignKey(
         Organization, on_delete=models.DO_NOTHING, null=False, blank=False
     )
@@ -270,7 +279,22 @@ class Patient_History(models.Model):
         upload_to="patient_overall_report/", blank=False, null=False
     )
     lab_reports_pdf = models.FileField(
-        upload_to="patient_lab_report/",null=True,blank=True)
+        upload_to="patient_lab_report/", null=True, blank=True
+    )
 
     def __str__(self) -> str:
         return self.patient_id
+
+
+class CustomUserProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="custom_profile"
+    )
+    designation = models.CharField(max_length=100, blank=False, null=False)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = "Custom User Profile"
+        verbose_name_plural = "Custom User Profiles"
