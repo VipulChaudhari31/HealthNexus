@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %} {% load static %} {% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card bg-dark text-light">
+        <div class="card-body">
+          <h2 class="card-title">Personal Info</h2>
+          <ul class="list-unstyled">
+            <li>Doctor ID: {{ personal_info.doctor_id }}</li>
+            <li>First Name: {{ personal_info.first_name }}</li>
+            {% if personal_info.middle_name %}
+            <li>Middle Name: {{ personal_info.middle_name }}</li>
+            {% endif %}
+            <li>Last Name: {{ personal_info.last_name }}</li>
+            <li>
+              Image Link:
+              <a href="{{ personal_info.image.url }}" target="_blank"
+                >See here</a
+              >
+            </li>
+            <li>Date of Birth: {{ personal_info.dob }}</li>
+            <li>Gender: {{ personal_info.gender }}</li>
+            <li>Address: {{ personal_info.address }}</li>
+            <li>
+              Degrees:
+              <ol>
+                {% for degree in personal_info.degrees.all %}
+                <li>{{ degree.name }}</li>
+                {% endfor %}
+              </ol>
+            </li>
+            <li>Specialization: {{ personal_info.specialization }}</li>
+            <li>Organization ID: {{ personal_info.organization_id }}</li>
+            <li>Phone Number: {{ personal_info.phone_number }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <div class="card bg-dark text-light mt-4">
+        <div class="card-body">
+          <h4 class="card-title text-center alert alert-info mb-4">
+            All Records of Patient History
+          </h4>
+          {% if his_patient_records %}
+          <h4>Table Data</h4>
+          <div class="table-responsive">
+            <table class="table table-hover table-dark text-light">
+              <thead>
+                <tr>
+                  <th scope="col">Sr. No</th>
+                  <th scope="col">Patient ID</th>
+                  <th scope="col">Doctor ID</th>
+                  <th scope="col">Staff ID</th>
+                  <th scope="col">Organization ID</th>
+                  <th scope="col">Patient Report PDF Link</th>
+                  <th scope="col">Patient Lab Report PDF Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for key in his_patient_records %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ key.patient_id }}</td>
+                  <td>{{ key.doctor_id }}</td>
+                  <td>
+                    <ul class="list-unstyled">
+                      {% for x in key.staff_id.all %}
+                      <li>{{ x.staff_id }}</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                  <td>{{ key.organization_id }}</td>
+                  <td>
+                    <a href="{{ key.patient_report_pdf.url }}" target="_blank"
+                      >Link</a
+                    >
+                  </td>
+                  <td>
+                    {% if key.lab_reports_pdf %}
+                    <a href="{{ key.lab_reports_pdf.url }}" target="_blank"
+                      >Link</a
+                    >
+                    {% else %}
+                    <h4>No file uploaded.</h4>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <h4 class="text-center alert alert-warning">
+            No records in the Database!
+          </h4>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

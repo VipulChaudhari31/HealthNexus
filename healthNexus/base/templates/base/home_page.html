@@ -58,40 +58,36 @@
         <!-- Service Card 5 -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card">
-                <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 5">
-                <div class="card-body">
-                    <h5 class="card-title">Organization staff</h5>
-                </div>
+                <a href="{% url 'organization_staff_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Organization Staff</h5>
+                    </div>
+                </a>
             </div>
         </div>
 
         <!-- Service Card 6 -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card">
-                <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 6">
-                <div class="card-body">
-                    <h5 class="card-title">Patient</h5>
-                </div>
+                <a href="{% url 'patient_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Patient</h5>
+                    </div>
+                </a>
             </div>
         </div>
 
         <!-- Service Card 7 -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card">
-                <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 7">
-                <div class="card-body">
-                    <h5 class="card-title">Lab Report</h5>
-                </div>
-            </div>
-        </div>
-
-        <!-- Service Card 8 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 8">
-                <div class="card-body">
-                    <h5 class="card-title">Patient History</h5>
-                </div>
+                <a href="{% url 'patient_history_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service &">
+                    <div class="card-body">
+                        <h5 class="card-title">Patient History</h5>
+                    </div>
+                </a>
             </div>
         </div>
 
