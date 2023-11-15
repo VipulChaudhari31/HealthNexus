@@ -1,37 +1,58 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate, login
 from .forms import *
+
 
 # Landing page view
 def landing_page_view(request):
-    if request.method=='POST':
-        fm=AuthenticationForm(request=request,data=request.POST)
+    if request.method == "POST":
+        fm = AuthenticationForm(request=request, data=request.POST)
         if fm.is_valid():
-            username=fm.cleaned_data['username']
-            password=fm.cleaned_data['password']
-            user=authenticate(username=username,password=password)
+            username = fm.cleaned_data["username"]
+            password = fm.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
             if user:
-                login(request,user)
+                login(request, user)
                 custom_profile = CustomUserProfile.objects.get(user=user)
                 designation = custom_profile.designation
-                if designation=='doctor':
-                    return redirect('doctor_home_page')
-                elif designation=='patient':
-                    return redirect('patient_home_page')
+                if designation == "doctor":
+                    return redirect("doctor_home_page")
+                elif designation == "patient":
+                    return redirect("patient_home_page")
     else:
-        fm=AuthenticationForm()
-    return render(request,'base\website_landing_page.html',{'form':fm})
+        fm = AuthenticationForm()
+    return render(request, "base\website_landing_page.html", {"form": fm})
+
 
 def doctor_home_page(request):
-    personal_info=Doctor.objects.get(doctor_id=request.user.username)
-    all_his_patients_records = Patient_History.objects.filter(doctor_id=request.user.username)
-    return render(request,'base/1_doctor_home_page.html',{'personal_info':personal_info,'his_patient_records':all_his_patients_records})
+    personal_info = Doctor.objects.get(doctor_id=request.user.username)
+    all_his_patients_records = Patient_History.objects.filter(
+        doctor_id=request.user.username
+    )
+    return render(
+        request,
+        "base/1_doctor_home_page.html",
+        {
+            "personal_info": personal_info,
+            "his_patient_records": all_his_patients_records,
+        },
+    )
+
 
 def patient_home_page(request):
-    personal_info=Patient.objects.get(patient_id=request.user.username)
-    all_his_patients_records = Patient_History.objects.filter(patient_id=request.user.username)
-    return render(request,'base/2_patient_home_page.html',{'personal_info':personal_info,'his_patient_records':all_his_patients_records})
+    personal_info = Patient.objects.get(patient_id=request.user.username)
+    all_his_patients_records = Patient_History.objects.filter(
+        patient_id=request.user.username
+    )
+    return render(
+        request,
+        "base/2_patient_home_page.html",
+        {
+            "personal_info": personal_info,
+            "his_patient_records": all_his_patients_records,
+        },
+    )
 
 
 # Home page view
@@ -180,8 +201,12 @@ def update_doctor_record(request, id):
 
 def delete_doctor_record(request, id):
     if request.method == "POST":
-        pi = Doctor.objects.get(pk=id)
-        pi.delete()
+        pi_1 = Doctor.objects.get(pk=id)
+        pi_2 = User.objects.get(username=id)
+
+        # Also deleting the user from inbuilt and custom user
+        pi_2.delete()
+        pi_1.delete()
         return redirect("doctor_page")
 
 
@@ -274,8 +299,13 @@ def update_patient_record(request, id):
 
 def delete_patient_record(request, id):
     if request.method == "POST":
-        pi = Patient.objects.get(pk=id)
-        pi.delete()
+        pi_1 = Patient.objects.get(pk=id)
+        pi_2 = User.objects.get(username=id)
+
+        # Also deleting the user from inbuilt and custom user
+        pi_2.delete()
+        pi_1.delete()
+
         return redirect("patient_page")
 
 
@@ -316,3 +346,30 @@ def delete_patient_history_record(request, id):
         pi = Patient_History.objects.get(pk=id)
         pi.delete()
         return redirect("patient_history_page")
+
+
+# Create,show and delete for organization admin
+def organization_admin(request):
+    if request.method == "POST":
+        fm = Organization_Admin_Form(request.POST)
+        if fm.is_valid():
+            # fm.save()
+            print(fm.cleaned_data["organization_id"])
+            fm = Organization_Admin_Form()
+    else:
+        fm = Organization_Admin_Form()
+
+    all_records = Organization_Admin.objects.all()
+
+    return render(
+        request,
+        "base\organization_admin_page.html",
+        {"form": fm, "all_records": all_records},
+    )
+
+
+def delete_organization_admin_record(request, id):
+    if request.method == "POST":
+        pi = Organization_Admin.objects.get(pk=id)
+        pi.delete()
+        return redirect("organization_admin_page")

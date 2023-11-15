@@ -6,7 +6,11 @@ from .views import *
 urlpatterns = [
     # View for landing page
     path('',landing_page_view,name='landing_page_view'),
+
+    # View for patient personal home page
     path('patient_home_page',patient_home_page,name='patient_home_page'),
+
+    # View for doctor personal home page
     path('doctor_home_page',doctor_home_page,name='doctor_home_page'),
 
     # View for home page
@@ -44,6 +48,10 @@ urlpatterns = [
     path('patient_history_page',patient_history,name='patient_history_page'),
     path('patient_history_page/delete_patient_history_record/<int:id>',delete_patient_history_record,name='delete_patient_history_record'),
     path('patient_history_page/update_patient_history_record/<int:id>',update_patient_history_record,name='update_patient_history_record'),
+
+    # View for organization admin
+    path('organization_admin_page',organization_admin,name='organization_admin_page'),
+    path('organization_admin_page/delete_organization_admin_records/<str:id>',delete_organization_admin_record,name='delete_organization_admin_record')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
