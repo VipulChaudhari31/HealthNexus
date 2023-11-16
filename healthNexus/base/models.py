@@ -270,7 +270,7 @@ class Patient_History(models.Model):
         Doctor, on_delete=models.DO_NOTHING, null=False, blank=False
     )
     staff_id = models.ManyToManyField(
-        Organization_Staff, related_name="asscociated_staffs",blank=True,null=True
+        Organization_Staff, related_name="asscociated_staffs", blank=True, null=True
     )
     organization_id = models.ForeignKey(
         Organization, on_delete=models.DO_NOTHING, null=False, blank=False
@@ -284,6 +284,19 @@ class Patient_History(models.Model):
 
     def __str__(self) -> str:
         return self.patient_id
+
+
+class Organization_Admin(models.Model):
+    unique_id = models.CharField(
+        max_length=20, primary_key=True, unique=True, blank=False, null=False
+    )
+    first_name = models.CharField(max_length=100, blank=False, null=False)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=False, null=False)
+    organization_id=models.OneToOneField(Organization,on_delete=models.CASCADE,null=False,blank=False)
+
+    def __str__(self) -> str:
+        return f"{self.organization_id}_{self.first_name}_{self.last_name}"
 
 
 class CustomUserProfile(models.Model):

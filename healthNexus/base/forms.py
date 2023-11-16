@@ -396,3 +396,40 @@ class Patient_History_Form(forms.ModelForm):
                 attrs={"class": "form-control-file bg-dark text-light"}
             ),
         }
+
+
+class Organization_Admin_Form(forms.ModelForm):
+    class Meta:
+        model = Organization_Admin
+        fields = [
+            "unique_id",
+            "first_name",
+            "middle_name",
+            "last_name",
+            "organization_id",
+        ]
+        widgets = {
+            "unique_id": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "middle_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control bg-dark text-light"}
+            ),
+            "organization_id": forms.Select(
+                attrs={"class": "form-select bg-dark text-light"}
+            ),
+        }
+
+    def clean_unique_id(self):
+        unique_id = self.cleaned_data["unique_id"]
+        if not unique_id.isdigit() or len(unique_id) != 16:
+            raise forms.ValidationError(
+                "Patient Id should be exactly 16 digits and contain only digits."
+            )
+        return unique_id
