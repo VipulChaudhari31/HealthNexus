@@ -324,7 +324,7 @@ def patient_history(request):
     return render(
         request,
         "base/patient_history_page.html",
-        {"form": fm, "all_records": all_records,"docid":request.user.username},
+        {"form": fm, "all_records": all_records},
     )
 
 

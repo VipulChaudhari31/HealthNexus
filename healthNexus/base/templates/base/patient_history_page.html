@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %} {% load static %} {% block content %}
-<a href="/" class="btn btn-sm btn-info">Back to home</a>
+<a href="{% url 'doctor_home_page' %}" class="btn btn-sm btn-info">Back to home</a>
 <br /><br />
 <div class="row">
   <!-- Adding data into the database -->
@@ -44,7 +44,7 @@
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ key.patient_id }}</td>
-                <td>{{docid}}</td>
+                <td>{{ key.doctor_id }}</td>
                 <td>
                   <ul class="list-unstyled">
                     {% for x in key.staff_id.all %}
