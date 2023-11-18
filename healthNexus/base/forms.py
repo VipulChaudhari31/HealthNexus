@@ -220,7 +220,7 @@ class Organisation_Staff_Form(forms.ModelForm):
 
     def clean_staff_id(self):
         staff_id = self.cleaned_data["staff_id"]
-        if not staff_id.isdigit() or len(staff_id) != 16:
+        if not staff_id.isdigit() or len(staff_id) != 6:
             raise forms.ValidationError(
                 "Staff Id should be exactly 16 digits and contain only digits."
             )

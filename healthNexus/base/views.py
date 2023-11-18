@@ -16,10 +16,17 @@ def landing_page_view(request):
                 login(request, user)
                 custom_profile = CustomUserProfile.objects.get(user=user)
                 designation = custom_profile.designation
+                print(designation)
                 if designation == "doctor":
                     return redirect("doctor_home_page")
                 elif designation == "patient":
                     return redirect("patient_home_page")
+                elif designation== "organization_admin":
+                    return redirect("organization_admin_home_page")
+                elif designation=="organization_staff":
+                    return redirect("organization_staff_home_page")
+                elif designation=="super_admin":
+                    return redirect("super_admin_home_page")
     else:
         fm = AuthenticationForm()
     return render(request, "base\website_landing_page.html", {"form": fm})
@@ -54,6 +61,14 @@ def patient_home_page(request):
         },
     )
 
+def super_admin_home_page(request):
+    return render(request,"base/4_super_admin_home_page.html")
+
+def organization_staff_home_page(request):
+    return render(request,"base/5_organization_staff_home_page.html")
+
+def organization_admin_home_page(request):
+    return render(request,"base/3_organization_admin_home_page.html")
 
 # Home page view
 def home_page_view(request):
@@ -186,6 +201,14 @@ def doctor(request):
     )
 
 
+
+
+
+
+
+
+
+
 def update_doctor_record(request, id):
     if request.method == "POST":
         pi = Doctor.objects.get(pk=id)
@@ -216,6 +239,24 @@ def organization_staff(request):
         fm = Organisation_Staff_Form(request.POST, request.FILES)
         if fm.is_valid():
             fm.save()
+
+            username = fm.cleaned_data["staff_id"]
+            # dob = fm.cleaned_data["dob"]
+            # phone_number = fm.cleaned_data["phone_number"]
+            first=fm.cleaned_data["first_name"]
+            last=fm.cleaned_data["last_name"]
+            password = f"{first}@{last}"
+            user = User.objects.create_user(username=username, password=password)
+            user.save()
+
+            # Now create the entry in the custom user
+            custom_user = CustomUserProfile.objects.create(
+                user=user,
+                designation="organization_staff",
+            )
+            custom_user.save()
+
+
             fm = Organisation_Staff_Form()
     else:
         fm = Organisation_Staff_Form()
@@ -353,8 +394,23 @@ def organization_admin(request):
     if request.method == "POST":
         fm = Organization_Admin_Form(request.POST)
         if fm.is_valid():
-            # fm.save()
+            fm.save()
             print(fm.cleaned_data["organization_id"])
+            # First create the entry in the inbuilt user
+            username=fm.cleaned_data["unique_id"]
+            first = fm.cleaned_data["first_name"]
+            last = fm.cleaned_data["last_name"]
+            password = f"{first}@{last}"
+            print(password)
+            user = User.objects.create_user(username=username, password=password)
+            user.save()
+
+            # Now create the entry in the custom user
+            custom_user = CustomUserProfile.objects.create(
+                user=user,
+                designation="organization_admin",
+            )
+            custom_user.save()
             fm = Organization_Admin_Form()
     else:
         fm = Organization_Admin_Form()
@@ -373,3 +429,5 @@ def delete_organization_admin_record(request, id):
         pi = Organization_Admin.objects.get(pk=id)
         pi.delete()
         return redirect("organization_admin_page")
+
+
