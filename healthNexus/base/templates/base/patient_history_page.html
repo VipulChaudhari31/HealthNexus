@@ -44,7 +44,7 @@
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ key.patient_id }}</td>
-                <td>{{ key.doctor_id }}</td>
+                <td>{{docid}}</td>
                 <td>
                   <ul class="list-unstyled">
                     {% for x in key.staff_id.all %}
@@ -86,6 +86,7 @@
               {% endfor %}
             </tbody>
           </table>
+          <!-- <h4>{{docid}}</h4> -->
         </div>
         {% else %}
         <h4 class="text-center alert alert-warning">

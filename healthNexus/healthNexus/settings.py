@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'healthNexus.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':'Health Nexus Database',
-        'USER':'root',
-        'PASSWORD':'Anushree@2011',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Health_Nexus_Database',       # Replace with your MySQL database name
+        'USER': 'Vipulsc',       # Replace with your MySQL database user
+        'PASSWORD': 'Vipul@3105',  # Replace with your MySQL database password
+        'HOST': 'localhost',        # Replace with your MySQL database host
+        'PORT': '3306',             # Replace with your MySQL database port
     }
 }
 
