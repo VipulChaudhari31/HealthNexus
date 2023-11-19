@@ -42,6 +42,7 @@
                     </ul>
                 </div>
             </div>
+            <a href="{% url 'patient_history_page' %}" class="btn btn-sm btn-info mt-4"> Add Patient's History </a>
         </div>
 
         <!-- Patient History on the Right -->
@@ -49,7 +50,7 @@
             <div class="card bg-dark text-light">
                 <div class="card-body">
                     <h4 class="card-title text-center alert alert-info mb-4">
-                        All Records of Patient History
+                        All Records of His Patient
                     </h4>
                     {% if his_patient_records %}
                     <h4>Table Data</h4>
@@ -102,7 +103,27 @@
                     {% endif %}
                 </div>
             </div>
-            <a href="{% url 'patient_history_page' %}" class="btn btn-sm btn-info mt-4"> Add Patient's History </a>
+            <div class="card shadow m-2 bg-dark">
+                <div class="card-body">
+                    <h5 class="p-2 text-danger" >Enter patient id to get History</h5>
+                    <div class="container fluid">
+                        <form method="post">
+                            {% csrf_token %}
+                        
+                        
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Reason</th>
+                                <td><input type="text" name="reason" class="form-control" value="{{leave.reason}}"></td>
+                            </tr> 
+                        </table>
+                        <center><input type="submit" value="Submit" class="btn btn-primary m-2 px-3"></center>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        <!-- <h1>Enter patient id to get History</h1> 
+        <a href="/" class="btn btn-sm btn-info">Enter</a>    -->
         </div>
     </div>
 </div>
