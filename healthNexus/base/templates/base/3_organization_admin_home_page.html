@@ -1,1 +1,52 @@
-<h3>This is organization admin home page</h3>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Organization Admin Home page</h1>
+
+    <h2 class="mt-4">Services</h2>
+
+    <div class="row mt-4">
+        
+
+        <!-- Service Card 4 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <a href="{% url 'doctor_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctor</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Service Card 5 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <a href="{% url 'organization_staff_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Organization Staff</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Service Card 6 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+                <a href="{% url 'patient_page' %}" class="text-reset text-decoration-none">
+                    <img src="{% static 'base/images/male_doctor.png' %}" class="card-img-top" alt="Service 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Patient</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+
+    </div>
+</div>
+{% endblock content %}

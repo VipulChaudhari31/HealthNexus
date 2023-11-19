@@ -32,7 +32,7 @@ def landing_page_view(request):
     return render(request, "base/website_landing_page.html", {"form": fm})
     return render(request, "base/website_landing_page.html", {"form": fm})
 
-@user_has_designation('doctor')
+# @user_has_designation('doctor')
 def doctor_home_page(request):
     personal_info = Doctor.objects.get(doctor_id=request.user.username)
     all_his_patients_records = Patient_History.objects.filter(
@@ -48,7 +48,7 @@ def doctor_home_page(request):
     )
 
 
-@user_has_designation('patient')
+# @user_has_designation('patient')
 def patient_home_page(request):
     personal_info = Patient.objects.get(patient_id=request.user.username)
     all_his_patients_records = Patient_History.objects.filter(
@@ -63,17 +63,17 @@ def patient_home_page(request):
         },
     )
 
-@user_has_designation('super_admin')
+# @user_has_designation('super_admin')
 def super_admin_home_page(request):
     return render(request,"base/4_super_admin_home_page.html")
 
 
-@user_has_designation('organization_staff')
+# @user_has_designation('organization_staff')
 def organization_staff_home_page(request):
     return render(request,"base/5_organization_staff_home_page.html")
 
 
-@user_has_designation('organization_admin')
+# @user_has_designation('organization_admin')
 def organization_admin_home_page(request):
     return render(request,"base/3_organization_admin_home_page.html")
 
