@@ -30,6 +30,7 @@ def landing_page_view(request):
     else:
         fm = AuthenticationForm()
     return render(request, "base/website_landing_page.html", {"form": fm})
+    return render(request, "base/website_landing_page.html", {"form": fm})
 
 @user_has_designation('doctor')
 def doctor_home_page(request):
@@ -52,7 +53,7 @@ def patient_home_page(request):
     personal_info = Patient.objects.get(patient_id=request.user.username)
     all_his_patients_records = Patient_History.objects.filter(
         patient_id=request.user.username
-    )[::-1]
+    )[::-1][::-1]
     return render(
         request,
         "base/2_patient_home_page.html",
@@ -96,6 +97,7 @@ def specialization_for_organisation(request):
     return render(
         request,
         "base/specialization_for_organisation_page.html",
+        "base/specialization_for_organisation_page.html",
         {"form": fm, "all_records": all_records},
     )
 
@@ -121,6 +123,7 @@ def organization(request):
 
     return render(
         request,
+        "base/organization_page.html",
         "base/organization_page.html",
         {"form": fm, "all_records": all_records},
     )
@@ -160,6 +163,7 @@ def degree(request):
 
     return render(
         request,
+        "base/degree_page.html",
         "base/degree_page.html",
         {"form": fm, "all_records": all_records},
     )
@@ -202,6 +206,7 @@ def doctor(request):
 
     return render(
         request,
+        "base/doctors_page.html",
         "base/doctors_page.html",
         {"form": fm, "all_records": all_records},
     )
@@ -272,6 +277,7 @@ def organization_staff(request):
     return render(
         request,
         "base/organization_staff_page.html",
+        "base/organization_staff_page.html",
         {"form": fm, "all_records": all_records},
     )
 
@@ -327,6 +333,7 @@ def patient(request):
     return render(
         request,
         "base/patient_page.html",
+        "base/patient_page.html",
         {"form": fm, "all_records": all_records},
     )
 
@@ -371,6 +378,7 @@ def patient_history(request):
     return render(
         request,
         "base/patient_history_page.html",
+        "base/patient_history_page.html",
         {"form": fm, "all_records": all_records},
     )
 
@@ -401,6 +409,7 @@ def organization_admin(request):
         fm = Organization_Admin_Form(request.POST)
         if fm.is_valid():
             fm.save()
+            fm.save()
             print(fm.cleaned_data["organization_id"])
             # First create the entry in the inbuilt user
             username=fm.cleaned_data["unique_id"]
@@ -425,6 +434,7 @@ def organization_admin(request):
 
     return render(
         request,
+        "base/organization_admin_page.html",
         "base/organization_admin_page.html",
         {"form": fm, "all_records": all_records},
     )
