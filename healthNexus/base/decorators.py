@@ -8,6 +8,9 @@ def user_has_designation(designation):
             # Check if the user has the specified designation
             if request.user.is_authenticated and hasattr(request.user, 'customuserprofile'):
                 user_designation = request.user.customuserprofile.designation
+                print(f"User Designation: {user_designation}, Expected: {designation}")
+                print(user_designation)
+                print(designation)
                 if user_designation == designation:
                     return view_func(request, *args, **kwargs)
             # If the user doesn't have the correct designation, you can redirect them or show an error page
