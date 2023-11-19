@@ -48,7 +48,7 @@ urlpatterns = [
     path('patient_history_page',patient_history,name='patient_history_page'),
     path('patient_history_page/delete_patient_history_record/<int:id>',delete_patient_history_record,name='delete_patient_history_record'),
     path('patient_history_page/update_patient_history_record/<int:id>',update_patient_history_record,name='update_patient_history_record'),
-
+    path('logout/',Logout,name='logout'),
     # View for organization admin
     path('organization_admin_page',organization_admin,name='organization_admin_page'),
     path('organization_admin_page/delete_organization_admin_records/<str:id>',delete_organization_admin_record,name='delete_organization_admin_record')

@@ -8,6 +8,8 @@
         <h1 class="text-center mb-4">Welcome {{ personal_info.first_name }} {{ personal_info.last_name }}</h1>
     </div>
   </div>
+  <a href="{% url 'logout' %}" class="btn btn-sm btn-info">Logout</a>
+                    
     <div class="row">
         <!-- Personal Info on the Left -->
         <div class="col-md-4">
@@ -50,7 +52,7 @@
             <div class="card bg-dark text-light">
                 <div class="card-body">
                     <h4 class="card-title text-center alert alert-info mb-4">
-                        All Records of His Patient
+                        All Records of His Patient History
                     </h4>
                     {% if his_patient_records %}
                     <h4>Table Data</h4>
@@ -103,27 +105,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="card shadow m-2 bg-dark">
-                <div class="card-body">
-                    <h5 class="p-2 text-danger" >Enter patient id to get History</h5>
-                    <div class="container fluid">
-                        <form method="post">
-                            {% csrf_token %}
-                        
-                        
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Reason</th>
-                                <td><input type="text" name="reason" class="form-control" value="{{leave.reason}}"></td>
-                            </tr> 
-                        </table>
-                        <center><input type="submit" value="Submit" class="btn btn-primary m-2 px-3"></center>
-                    </form>
-                    </div>
-                </div>
-            </div>
-        <!-- <h1>Enter patient id to get History</h1> 
-        <a href="/" class="btn btn-sm btn-info">Enter</a>    -->
+            
         </div>
     </div>
 </div>

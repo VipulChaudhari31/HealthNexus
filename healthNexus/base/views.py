@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from .forms import *
 
 
@@ -373,3 +373,7 @@ def delete_organization_admin_record(request, id):
         pi = Organization_Admin.objects.get(pk=id)
         pi.delete()
         return redirect("organization_admin_page")
+
+def Logout(request):
+    logout(request)
+    return redirect('landing_page_view')
