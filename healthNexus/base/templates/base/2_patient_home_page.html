@@ -1,94 +1,100 @@
 {% extends 'base/base.html' %} {% load static %} {% block content %}
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-8">
-      <div class="card bg-dark text-light">
-        <div class="card-body">
-          <h2 class="card-title">Personal Info</h2>
-          <ul class="list-unstyled">
-            <li>Patient ID: {{ personal_info.patient_id }}</li>
-            <li>First Name: {{ personal_info.first_name }}</li>
-            {% if personal_info.middle_name %}
-            <li>Middle Name: {{ personal_info.middle_name }}</li>
-            {% endif %}
-            <li>Last Name: {{ personal_info.last_name }}</li>
-            <li>
-              Image Link:
-              <a href="{{ personal_info.image.url }}" target="_blank"
-                >See here</a
-              >
-            </li>
-            <li>Gender: {{ personal_info.gender }}</li>
-            <li>Date of Birth: {{ personal_info.dob }}</li>
-            <li>Address: {{ personal_info.address }}</li>
-            <li>Phone Number: {{ personal_info.phone_number }}</li>
-          </ul>
-        </div>
-      </div>
-
-      <hr class="my-4" />
-
-      <div class="card bg-dark text-light mt-4">
-        <div class="card-body">
-          <h4 class="card-title text-center alert alert-info mb-4">
-            All Records of Patient History
-          </h4>
-          {% if his_patient_records %}
-          <h4>Table Data</h4>
-          <div class="table-responsive">
-            <table class="table table-hover table-dark text-light">
-              <thead>
-                <tr>
-                  <th scope="col">Sr. No</th>
-                  <th scope="col">Patient ID</th>
-                  <th scope="col">Doctor ID</th>
-                  <th scope="col">Staff ID</th>
-                  <th scope="col">Organization ID</th>
-                  <th scope="col">Patient Report PDF Link</th>
-                  <th scope="col">Patient Lab Report PDF Link</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for key in his_patient_records %}
-                <tr>
-                  <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{ key.patient_id }}</td>
-                  <td>{{ key.doctor_id }}</td>
-                  <td>
-                    <ul class="list-unstyled">
-                      {% for x in key.staff_id.all %}
-                      <li>{{ x.staff_id }}</li>
-                      {% endfor %}
-                    </ul>
-                  </td>
-                  <td>{{ key.organization_id }}</td>
-                  <td>
-                    <a href="{{ key.patient_report_pdf.url }}" target="_blank"
-                      >Link</a
-                    >
-                  </td>
-                  <td>
-                    {% if key.lab_reports_pdf %}
-                    <a href="{{ key.lab_reports_pdf.url }}" target="_blank"
-                      >Link</a
-                    >
-                    {% else %}
-                    <h4>No file uploaded.</h4>
-                    {% endif %}
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          {% else %}
-          <h4 class="text-center alert alert-warning">
-            No records in the Database!
-          </h4>
-          {% endif %}
-        </div>
-      </div>
+    <div class="col-md-12">
+        <h1 class="text-center mb-4">Welcome {{ personal_info.first_name }} {{ personal_info.last_name }}</h1>
     </div>
+  </div>
+
+  <div class="row">  
+      <!-- Personal Info on the Left -->
+      <div class="col-md-4">
+          <div class="card bg-dark text-light">
+              <div class="card-body">
+                  <h2 class="card-title">Personal Info</h2>
+                  <ul class="list-unstyled">
+                      <li>Patient ID: {{ personal_info.patient_id }}</li>
+                      <li>First Name: {{ personal_info.first_name }}</li>
+                      {% if personal_info.middle_name %}
+                      <li>Middle Name: {{ personal_info.middle_name }}</li>
+                      {% endif %}
+                      <li>Last Name: {{ personal_info.last_name }}</li>
+                      <li>
+                          Image Link:
+                          {% if personal_info.image %}
+                                <img src="{{ personal_info.image.url }}" alt="Patient Image" class="img-fluid">
+                          {% else %}
+                                <span class="text-muted">No image available</span>
+                          {% endif %}
+                      </li>
+                      <li>Gender: {{ personal_info.gender }}</li>
+                      <li>Date of Birth: {{ personal_info.dob }}</li>
+                      <li>Address: {{ personal_info.address }}</li>
+                      <li>Phone Number: {{ personal_info.phone_number }}</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+      <!-- Patient History on the Right -->
+      <div class="col-md-8">
+          <div class="card bg-dark text-light">
+              <div class="card-body">
+                  <h4 class="card-title text-center alert alert-info mb-4">
+                      All Records of Patient History
+                  </h4>
+                  {% if his_patient_records %}
+                  <h4>Table Data</h4>
+                  <div class="table-responsive">
+                      <table class="table table-hover table-dark text-light">
+                          <thead>
+                              <tr>
+                                  <!-- <th scope="col">Sr. No</th> -->
+                                  <!-- <th scope="col">Patient ID</th> -->
+                                  <th scope="col">Doctor ID</th>
+                                  <th scope="col">Staff ID</th>
+                                  <th scope="col">Organization ID</th>
+                                  <th scope="col">Patient Report PDF Link</th>
+                                  <th scope="col">Patient Lab Report PDF Link</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for key in his_patient_records %}
+                              <tr>
+                                  <!-- <th scope="row">{{ forloop.counter }}</th> -->
+                                  <!-- <td>{{ key.patient_id }}</td> -->
+                                  <td>{{ key.doctor_id }}</td>
+                                  <td>
+                                      <ul class="list-unstyled">
+                                          {% for x in key.staff_id.all %}
+                                          <li>{{ x.staff_id }}</li>
+                                          {% endfor %}
+                                      </ul>
+                                  </td>
+                                  <td>{{ key.organization_id }}</td>
+                                  <td>
+                                      <a href="{{ key.patient_report_pdf.url }}" target="_blank">Link</a>
+                                  </td>
+                                  <td>
+                                      {% if key.lab_reports_pdf %}
+                                      <a href="{{ key.lab_reports_pdf.url }}" target="_blank">Link</a>
+                                      {% else %}
+                                      <h4>No file uploaded.</h4>
+                                      {% endif %}
+                                  </td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+                  {% else %}
+                  <h4 class="text-center alert alert-warning">
+                      No records in the Database!
+                  </h4>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
   </div>
 </div>
 {% endblock content %}

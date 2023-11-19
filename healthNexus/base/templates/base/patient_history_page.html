@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %} {% load static %} {% block content %}
-<a href="/" class="btn btn-sm btn-info">Back to home</a>
+<a href="{% url 'doctor_home_page' %}" class="btn btn-sm btn-info">Back to home</a>
 <br /><br />
 <div class="row">
   <!-- Adding data into the database -->
@@ -86,6 +86,7 @@
               {% endfor %}
             </tbody>
           </table>
+          <!-- <h4>{{docid}}</h4> -->
         </div>
         {% else %}
         <h4 class="text-center alert alert-warning">
