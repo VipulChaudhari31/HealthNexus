@@ -97,7 +97,7 @@ def specialization_for_organisation(request):
     return render(
         request,
         "base/specialization_for_organisation_page.html",
-        "base/specialization_for_organisation_page.html",
+       
         {"form": fm, "all_records": all_records},
     )
 
@@ -124,7 +124,7 @@ def organization(request):
     return render(
         request,
         "base/organization_page.html",
-        "base/organization_page.html",
+        
         {"form": fm, "all_records": all_records},
     )
 
@@ -164,7 +164,7 @@ def degree(request):
     return render(
         request,
         "base/degree_page.html",
-        "base/degree_page.html",
+       
         {"form": fm, "all_records": all_records},
     )
 
@@ -207,7 +207,7 @@ def doctor(request):
     return render(
         request,
         "base/doctors_page.html",
-        "base/doctors_page.html",
+       
         {"form": fm, "all_records": all_records},
     )
 
@@ -277,7 +277,7 @@ def organization_staff(request):
     return render(
         request,
         "base/organization_staff_page.html",
-        "base/organization_staff_page.html",
+        
         {"form": fm, "all_records": all_records},
     )
 
@@ -332,7 +332,7 @@ def patient(request):
 
     return render(
         request,
-        "base/patient_page.html",
+       
         "base/patient_page.html",
         {"form": fm, "all_records": all_records},
     )
@@ -377,7 +377,7 @@ def patient_history(request):
 
     return render(
         request,
-        "base/patient_history_page.html",
+        
         "base/patient_history_page.html",
         {"form": fm, "all_records": all_records},
     )
@@ -435,7 +435,7 @@ def organization_admin(request):
     return render(
         request,
         "base/organization_admin_page.html",
-        "base/organization_admin_page.html",
+        
         {"form": fm, "all_records": all_records},
     )
 

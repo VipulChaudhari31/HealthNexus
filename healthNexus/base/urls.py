@@ -14,7 +14,7 @@ urlpatterns = [
     path('doctor_home_page',doctor_home_page,name='doctor_home_page'),
 
     # View for super admin personal home page
-    path('super_admin_home_page',home_page_view,name='super_admin_home_page'),
+    path('super_admin_home_page',super_admin_home_page,name='super_admin_home_page'),
 
     # View for medical staff personal home page
     path('organization_staff_home_page',organization_staff_home_page,name='organization_staff_home_page'),
