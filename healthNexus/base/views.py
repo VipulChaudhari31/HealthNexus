@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from .forms import *
 from .decorators import user_has_designation
 
@@ -53,7 +53,7 @@ def patient_home_page(request):
     personal_info = Patient.objects.get(patient_id=request.user.username)
     all_his_patients_records = Patient_History.objects.filter(
         patient_id=request.user.username
-    )[::-1][::-1]
+    )[::-1]
     return render(
         request,
         "base/2_patient_home_page.html",
@@ -368,7 +368,19 @@ def patient_history(request):
     if request.method == "POST":
         fm = Patient_History_Form(request.POST, request.FILES)
         if fm.is_valid():
-            fm.save()
+            # Get the form instance without saving it
+            instance = fm.save(commit=False)
+
+
+            helper=Doctor.objects.get(doctor_id=request.user.username)
+            # Manually set the doctor_id based on your logic
+            # For example, you can set it to the currently logged-in doctor
+            instance.doctor_id = helper  # Assuming you have a 'doctor' field in your User model
+
+            # Save the instance with the manually set doctor_id
+            instance.save()
+
+            # Reset the form to create a new one
             fm = Patient_History_Form()
     else:
         fm = Patient_History_Form()
@@ -447,3 +459,6 @@ def delete_organization_admin_record(request, id):
         return redirect("organization_admin_page")
 
 
+def Logout(request):
+    logout(request)
+    return redirect('landing_page_view')

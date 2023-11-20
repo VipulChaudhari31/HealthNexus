@@ -369,7 +369,6 @@ class Patient_History_Form(forms.ModelForm):
         model = Patient_History
         fields = [
             "patient_id",
-            "doctor_id",
             "staff_id",
             "organization_id",
             "patient_report_pdf",
@@ -378,9 +377,6 @@ class Patient_History_Form(forms.ModelForm):
 
         widgets = {
             "patient_id": forms.Select(
-                attrs={"class": "form-select bg-dark text-light"}
-            ),
-            "doctor_id": forms.Select(
                 attrs={"class": "form-select bg-dark text-light"}
             ),
             "staff_id": forms.SelectMultiple(

@@ -12,6 +12,13 @@
           <div class="card bg-dark text-light">
               <div class="card-body">
                   <h2 class="card-title">Personal Info</h2>
+                  <div class="text-center mb-3">
+                    {% if personal_info.image %}
+                        <img src="{{ personal_info.image.url }}" alt="Patient Image" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                    {% else %}
+                        <span class="text-muted">No image available</span>
+                    {% endif %}
+                </div>
                   <ul class="list-unstyled">
                       <li>Patient ID: {{ personal_info.patient_id }}</li>
                       <li>First Name: {{ personal_info.first_name }}</li>
@@ -19,14 +26,14 @@
                       <li>Middle Name: {{ personal_info.middle_name }}</li>
                       {% endif %}
                       <li>Last Name: {{ personal_info.last_name }}</li>
-                      <li>
+                      <!-- <li>
                           Image Link:
                           {% if personal_info.image %}
                                 <img src="{{ personal_info.image.url }}" alt="Patient Image" class="img-fluid">
                           {% else %}
                                 <span class="text-muted">No image available</span>
                           {% endif %}
-                      </li>
+                      </li> -->
                       <li>Gender: {{ personal_info.gender }}</li>
                       <li>Date of Birth: {{ personal_info.dob }}</li>
                       <li>Address: {{ personal_info.address }}</li>

@@ -7,6 +7,8 @@ urlpatterns = [
     # View for landing page
     path('',landing_page_view,name='landing_page_view'),
 
+    path('logout/',Logout,name='logout'),
+    
     # View for patient personal home page
     path('patient_home_page',patient_home_page,name='patient_home_page'),
 

@@ -14,6 +14,13 @@
             <div class="card bg-dark text-light">
                 <div class="card-body">
                     <h2 class="card-title">Personal Info</h2>
+                    <div class="text-center mb-3">
+                        {% if personal_info.image %}
+                            <img src="{{ personal_info.image.url }}" alt="Patient Image" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                        {% else %}
+                            <span class="text-muted">No image available</span>
+                        {% endif %}
+                    </div>
                     <ul class="list-unstyled">
                         <li><strong>Doctor ID:</strong> {{ personal_info.doctor_id }}</li>
                         <li><strong>First Name:</strong> {{ personal_info.first_name }}</li>
@@ -21,10 +28,10 @@
                         <li><strong>Middle Name:</strong> {{ personal_info.middle_name }}</li>
                         {% endif %}
                         <li><strong>Last Name:</strong> {{ personal_info.last_name }}</li>
-                        <li>
+                        <!-- <li>
                             <strong>Image Link:</strong>
                             <a href="{{ personal_info.image.url }}" target="_blank">See here</a>
-                        </li>
+                        </li> -->
                         <li><strong>Date of Birth:</strong> {{ personal_info.dob }}</li>
                         <li><strong>Gender:</strong> {{ personal_info.gender }}</li>
                         <li><strong>Address:</strong> {{ personal_info.address }}</li>
@@ -90,6 +97,25 @@
                                         <h4>No file uploaded.</h4>
                                         {% endif %}
                                     </td>
+                                    <td>
+                                        <a
+                                          href="{% url 'update_patient_history_record' key.pk %}"
+                                          class="btn btn-warning btn-sm d-inline"
+                                          >Edit</a
+                                        >
+                                      </td>
+                                      <td>
+                                        <form
+                                          action="{% url 'delete_patient_history_record' key.pk %}"
+                                          method="POST"
+                                          class="d-inline"
+                                        >
+                                          {% csrf_token %}
+                                          <button type="submit" class="btn btn-danger btn-sm ml-2">
+                                            Delete
+                                          </button>
+                                        </form>
+                                      </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
